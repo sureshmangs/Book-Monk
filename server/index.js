@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path')
 
 const app = express();
 
@@ -19,6 +20,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
 app.use(bodyParser.json())
+
+// Routes
+app.use('/books', require('./routes/books'));
+
+
 
 
 

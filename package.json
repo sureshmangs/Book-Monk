@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "express-promise-router": "^3.0.3",
     "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
     "nodemon": "^2.0.4"
   }
 }
