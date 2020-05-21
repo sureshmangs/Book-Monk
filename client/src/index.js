@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Provider } from 'react-redux';
+import store from './store';
+
 
 import './index.css';
 import App from './App';
@@ -14,17 +17,19 @@ import Book from './components/Book';
 import * as serviceWorker from './serviceWorker';
 
 const routing = (
-  <Router>
-    <Switch>
-      <App>
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/signup" component={SignUp} />
-        <Route exact path="/bookcontainer" component={BookContainer} />
-        <Route exact path="/book" component={Book} />
-        <Route exact path="/notfound" component={NotFound} />
-      </App>
-    </Switch>
-  </Router>
+  <Provider store={store}>
+    <Router>
+      <Switch>
+        <App>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/bookcontainer" component={BookContainer} />
+          <Route exact path="/book/:id" component={Book} />
+          <Route exact path="/notfound" component={NotFound} />
+        </App>
+      </Switch>
+    </Router>
+  </Provider>
 )
 
 ReactDOM.render(routing, document.getElementById('root'));
