@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchBookInfo } from '../actions/bookAction';
+import * as actions from '../actions/index';
 import Spinner from './Spinner';
 
 class Book extends Component {
 
     componentDidMount() {
         this.props.fetchBookInfo(this.props.match.params.id);
+    }
+
+    handleAddToCart = () => {
+        this.props.addToCart(this.props.book);
+        alert('book added to cart')
     }
     render() {
         const { book, loadBookSpin } = this.props;
@@ -40,7 +45,7 @@ class Book extends Component {
                             <strong>Price:</strong> {book.price}
                         </li>
                         <li className="list-group-item">
-                            <button className="btn btn-danger btn-sm ">Add to Cart</button>
+                            <button onClick={this.handleAddToCart} type="button" className="btn btn-danger">Add to Cart</button>
                         </li>
                     </ul>
                 </div>
@@ -57,4 +62,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, { fetchBookInfo })(Book)
+export default connect(mapStateToProps, actions)(Book)
