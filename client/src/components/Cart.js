@@ -5,15 +5,20 @@ import { Link } from 'react-router-dom';
 class Cart extends Component {
 
     handleIncrease = (id, quantity) => {
-        console.log('inc id', id)
-        console.log('inc quantity', quantity)
-        this.props.incrementQuantity(id);
+        console.log('handleIncrease id', id)
+        console.log('handleIncrease quantity', quantity)
+        if (quantity !== '99') {
+            this.props.incrementQuantity(id);
+        } else {
+            // books out of stock
+        }
+
     }
 
     handleDecrease = (id, quantity) => {
-        console.log('dec id', id)
-        console.log('decc quantity', quantity)
-        if (quantity === 1) {
+        console.log('handleDecrease id', id)
+        console.log('handleDecrease quantity', typeof quantity)
+        if (quantity === '1') {
             this.handleRemove(id);
         } else {
             this.props.decrementQuantity(id);
@@ -68,8 +73,8 @@ class Cart extends Component {
                                                                 </div>
                                                             </th>
                                                             <td className="border-0 align-middle text-center"><strong>₹ {item.book.price}</strong></td>
-                                                            <td className="border-0 align-middle text-center"><strong><button onClick={() => this.handleIncrease(`${item.book.id}, ${item.quantity}`)} className="btn btn-primary btn-sm mr-3"><i className="fa fa-arrow-up "></i></button>{item.quantity}<button onClick={() => this.handleDecrease(`${item.book.id}, ${item.quantity}`)} className="btn btn-primary btn-sm ml-3"><i className="fa fa-arrow-down "></i></button></strong></td>
-                                                            <td className="border-0 align-middle text-center"><button className="btn btn-danger btn-sm "><i className="fa fa-trash "></i></button></td>
+                                                            <td className="border-0 align-middle text-center"><strong><button onClick={() => this.handleIncrease(`${item.book.id}`, `${item.quantity}`)} className="btn btn-primary btn-sm mr-3"><i className="fa fa-arrow-up "></i></button>{item.quantity}<button onClick={() => this.handleDecrease(`${item.book.id}`, `${item.quantity}`)} className="btn btn-primary btn-sm ml-3"><i className="fa fa-arrow-down "></i></button></strong></td>
+                                                            <td className="border-0 align-middle text-center"><button onClick={() => this.handleRemove(`${item.book.id}`)} className="btn btn-danger btn-sm "><i className="fa fa-trash "></i></button></td>
                                                         </tr>
                                                     )
                                                 })}
@@ -87,7 +92,7 @@ class Cart extends Component {
                                         <div className="input-group mb-4 border rounded-pill p-2">
                                             <input type="text" placeholder="Apply coupon" aria-describedby="button-addon3" className="form-control border-0" />
                                             <div className="input-group-append border-0">
-                                                <button id="button-addon3" type="button" className="btn btn-dark px-4 rounded-pill"><i className="fa fa-gift mr-2"></i>Apply coupon</button>
+                                                <button id="button-addon3" type="button" className="btn btn-danger px-4 rounded-pill"><i className="fa fa-gift mr-2"></i>Apply coupon</button>
                                             </div>
                                         </div>
                                     </div>
@@ -108,7 +113,7 @@ class Cart extends Component {
                                             <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Total</strong>
                                                 <h5 className="font-weight-bold">₹ {total}</h5>
                                             </li>
-                                        </ul><a href="undef" className="btn btn-dark rounded-pill py-2 btn-block">Procceed to checkout</a>
+                                        </ul><a href="undef" className="btn btn-danger rounded-pill py-2 btn-block">Procceed to checkout</a>
                                     </div>
                                 </div>
                             </div>

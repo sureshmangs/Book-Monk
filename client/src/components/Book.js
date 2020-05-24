@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import Spinner from './Spinner';
@@ -11,7 +12,8 @@ class Book extends Component {
 
     handleAddToCart = () => {
         this.props.addToCart(this.props.book);
-        alert('book added to cart')
+        ReactDOM.findDOMNode(this.refs.addedToCart).style.display = 'block';
+
     }
     render() {
         const { book, loadBookSpin } = this.props;
@@ -45,7 +47,10 @@ class Book extends Component {
                             <strong>Price:</strong> {book.price}
                         </li>
                         <li className="list-group-item">
-                            <button onClick={this.handleAddToCart} type="button" className="btn btn-danger">Add to Cart</button>
+                            <div className="row">
+                                <button onClick={this.handleAddToCart} type="button" className="btn  btn-danger">Add to Cart</button>
+                                <button ref="addedToCart" className="btn btn-success ml-3 disabled" style={addedToCart}>Added to Cart</button>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -53,6 +58,11 @@ class Book extends Component {
         </div >;
         return <div>{content}</div>;
     }
+}
+
+
+const addedToCart = {
+    display: 'none'
 }
 
 const mapStateToProps = state => {

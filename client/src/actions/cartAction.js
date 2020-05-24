@@ -12,7 +12,6 @@ export const addToCart = (book) => {
 }
 
 export const incrementQuantity = (id) => {
-    console.log('in increment')
     return async dispatch => {
         dispatch({
             type: INCREMENT_QUANTITY,
@@ -24,7 +23,6 @@ export const incrementQuantity = (id) => {
 
 
 export const decrementQuantity = (id) => {
-    console.log('in decrement', id)
     return async dispatch => {
         dispatch({
             type: DECREMENT_QUANTITY,
@@ -37,10 +35,10 @@ export const decrementQuantity = (id) => {
 
 
 export const removeFromCart = (id) => {
-
     return async dispatch => {
         dispatch({
             type: REMOVE_FROM_CART,
+            payload: id
         })
 
     }
