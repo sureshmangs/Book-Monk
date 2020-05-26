@@ -5,3 +5,8 @@ export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
 export const INCREMENT_QUANTITY = 'INCREMENT_QUANTITY';
 export const DECREMENT_QUANTITY = 'DECREMENT_QUANTITY';
 export const MESSAGE = 'MESSAGE';
+export const AUTH_SIGN_UP = 'AUTH_SIGN_UP';
+export const AUTH_SIGN_IN = 'AUTH_SIGN_IN';
+export const AUTH_SIGN_OUT = 'AUTH_SIGN_OUT';
+export const AUTH_ERROR = 'AUTH_ERROR';
+

@@ -1,8 +1,20 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../actions/authAction';
+
 import NavCategories from './NavCategories';
 
+
 class Navbar extends Component {
+    constructor(props) {
+        super(props);
+        this.signOut = this.signOut.bind(this);
+    }
+
+    async signOut(res) {
+        this.props.signOut();
+    }
     render() {
         return (
             <div>
@@ -22,12 +34,13 @@ class Navbar extends Component {
                             <li className="nav-item">
                                 <Link to="/cart"><button className="btn btn-danger mr-sm-2 my-2 my-sm-0"><i className="fa fa-shopping-bag" ></i></button></Link>
                             </li>
-                            <li className="nav-item ">
+                            {!this.props.isAuth ? <li className="nav-item ">
                                 <Link to="/signup"><button className="btn btn-primary mr-sm-2 my-2 my-sm-0"><i className="fa fa-user-plus" ></i></button></Link>
-                            </li>
-                            {/* <li className="nav-item ">
-                                <Link to="/"><button className="btn btn-primary mr-sm-2 my-2 my-sm-0"><i className="fa fa-arrow-circle-left" ></i></button></Link>
-                            </li> */}
+                            </li> : null}
+                            {this.props.isAuth ? <li className="nav-item ">
+                                <Link to="/"><button onClick={this.signOut} className="btn btn-primary mr-sm-2 my-2 my-sm-0"><i className="fa fa-arrow-circle-left" ></i></button></Link>
+                            </li> : null}
+
                         </ul>
                     </div>
                 </nav>
@@ -37,4 +50,10 @@ class Navbar extends Component {
     }
 }
 
-export default Navbar
+const mapStateToProps = state => {
+    return {
+        isAuth: state.auth.isAuth
+    }
+}
+
+export default connect(mapStateToProps, actions)(Navbar);

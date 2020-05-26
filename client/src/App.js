@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
+import * as actions from './actions/authAction';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
 import './index.css';
 
 class App extends Component {
+
+  componentDidMount() {
+    this.props.checkAuth();
+  }
+
   render() {
     return (
       <div>
@@ -17,4 +23,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default connect(null, actions)(App);

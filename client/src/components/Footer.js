@@ -84,7 +84,7 @@ class Footer extends Component {
                         <div className="row">
                             <div className="col-md-6">
                                 <div className="footer-bottom-left pull-left">
-                                    <p style={{ color: '#fff' }}>Copyright &copy; 2020 <span><a href="undefiend" style={{ textDecoration: 'none' }}>SURE7</a></span>. All Right Reserved.</p>
+                                    <p style={{ color: '#fff' }}>Copyright &copy; 2020 <span><a href="https://www.github.com/sureshmangs/Book-Monk" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>SURE7</a></span>. All Right Reserved.</p>
                                 </div>
                             </div>
                             <div className="col-md-6">
