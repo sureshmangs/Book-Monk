@@ -24,6 +24,8 @@ app.use(bodyParser.json())
 // Routes
 app.use('/books', require('./routes/books'));
 
+app.use('/users', require('./routes/users'));
+
 
 
 

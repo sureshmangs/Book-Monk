@@ -1,20 +1,4 @@
-const mysql = require('mysql');
-
-const connection = mysql.createConnection({
-    host: '127.0.0.1',
-    user: 'root',
-    password: '',
-    database: 'book_monk'
-});
-
-connection.connect(function (err) {
-    if (err) {
-        console.error('error connecting to DB');
-        return;
-    }
-    console.log('Coonected to DB successfully');
-});
-
+const connection = require('../models/dbconnection');
 
 module.exports = {
     getBooks: async (req, res, next) => {
