@@ -43,7 +43,6 @@ passport.use('googleToken', new GoogleStrategy({
     scope: ['openid', 'email']
 }, async (accessToken, refreshToken, profile, done) => {
     try {
-
         let sql = `SELECT * FROM users where id="${profile.id}"`;
         connection.query(sql, (err, result) => {
             if (err) {
@@ -51,18 +50,21 @@ passport.use('googleToken', new GoogleStrategy({
                 done(error, false, error.message);
             }
             else {
-                if (result) {
+                if (result.length) {
                     console.log('user already exists');
                     return done(null, result);
                 }
                 console.log('creating a new user')
                 const newUser = {
                     id: profile.id,
-                    email: profile.emails[0].value
+                    name: profile.name.givenName + ' ' + profile.name.familyName,
+                    image: profile._json.picture,
+                    email: profile.emails[0].value,
+                    acc_created: new Date()
                 }
 
-                let insertQuery = `INSERT INTO users ( id, email) values (?,?)`;
-                connection.query(insertQuery, [newUser.id, newUser.email], function (err, rows) {
+                let insertQuery = `INSERT INTO users ( id, name, image, email, acc_created) values (?,?,?,?,?)`;
+                connection.query(insertQuery, [newUser.id, newUser.name, newUser.image, newUser.email, newUser.acc_created], function (err, rows) {
                     if (err) {
                         console.log('error occured ', err)
                     }

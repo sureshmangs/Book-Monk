@@ -13,5 +13,12 @@ router.route('/oauth/google')
 router.route('/status')
     .get(passportJWT, UsersController.checkAuth);
 
+router.route('/newsletter')
+    .post(UsersController.newsletter);
+
+
+router.route('/userprofile')
+    .post(UsersController.fetchUserProfile);
+
 
 module.exports = router;
