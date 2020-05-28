@@ -32,13 +32,17 @@ class Navbar extends Component {
                                 </form>
                             </li>
                             <li className="nav-item">
-                                <Link to="/cart"><button className="btn btn-danger mr-sm-2 my-2 my-sm-0"><i className="fa fa-shopping-bag" ></i></button></Link>
+                                <Link to="/cart"><button className="btn btn-danger mr-sm-2 my-2 my-sm-0"><i className="fa fa-shopping-cart " ></i></button></Link>
                             </li>
                             {!this.props.isAuth ? <li className="nav-item ">
                                 <Link to="/signup"><button className="btn btn-primary mr-sm-2 my-2 my-sm-0"><i className="fa fa-user-plus" ></i></button></Link>
                             </li> : null}
-                            {this.props.isAuth ? <li className="nav-item ">
-                                <Link to="/"><button onClick={this.signOut} className="btn btn-primary mr-sm-2 my-2 my-sm-0"><i className="fa fa-arrow-circle-left" ></i></button></Link>
+                            {this.props.isAuth ? <li className="nav-item dropdown">
+                                <a className="nav-link dropdown-toggle" href="q#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Hello Guest</a>
+                                <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <Link to="/user_profile" className="dropdown-item">Profile</Link>
+                                    <Link to="/" className="dropdown-item" onClick={this.signOut} >Sign Out</Link>
+                                </div>
                             </li> : null}
 
                         </ul>

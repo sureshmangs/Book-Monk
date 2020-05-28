@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions/cartAction';
 import { Link } from 'react-router-dom';
@@ -31,6 +32,14 @@ class Cart extends Component {
         this.props.removeFromCart(id);
     }
 
+    handleCupoun = e => {
+        //call backend any check if coupon is valid
+    }
+
+    handleCupounSubmit = e => {
+        e.preventDefault();
+        ReactDOM.findDOMNode(this.refs.couponMsg).style.display = 'block';
+    }
     render() {
         const { items, subTotal, total } = this.props;
         return (
@@ -90,16 +99,17 @@ class Cart extends Component {
                                     <div className="p-4">
                                         <p className="font-italic mb-4">If you have a coupon code, please enter it in the box below</p>
                                         <div className="input-group mb-4 border rounded-pill p-2">
-                                            <input type="text" placeholder="Apply coupon" aria-describedby="button-addon3" className="form-control border-0" />
+                                            <input type="text" placeholder="Apply coupon" onChange={this.handleCupoun} aria-describedby="button-addon3" className="form-control border-0" />
                                             <div className="input-group-append border-0">
-                                                <button id="button-addon3" type="button" className="btn btn-danger px-4 rounded-pill"><i className="fa fa-gift mr-2"></i>Apply coupon</button>
+                                                <button id="button-addon3" type="button" onClick={this.handleCupounSubmit} className="btn btn-danger px-4 rounded-pill"><i className="fa fa-gift mr-2"></i>Apply coupon</button>
                                             </div>
                                         </div>
+                                        <div style={couponMsg} ref="couponMsg">Invalid Coupon</div>
                                     </div>
                                     <div className="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">Instructions for seller</div>
                                     <div className="p-4">
                                         <p className="font-italic mb-4">If you have some information for the seller you can leave them in the box below</p>
-                                        <textarea name="" cols="30" rows="2" className="form-control"></textarea>
+                                        <textarea onChange={this.handleSellerInstructions} name="" cols="30" rows="2" className="form-control"></textarea>
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
@@ -113,7 +123,8 @@ class Cart extends Component {
                                             <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Total</strong>
                                                 <h5 className="font-weight-bold">₹ {total}</h5>
                                             </li>
-                                        </ul><a href="undef" className="btn btn-danger rounded-pill py-2 btn-block">Procceed to checkout</a>
+                                        </ul>
+                                        <Link to='/checkout' className="text-decoration-none"><button className="btn btn-danger rounded-pill py-2 btn-block text-decoration-none">Procceed to checkout</button></Link>
                                     </div>
                                 </div>
                             </div>
@@ -123,6 +134,15 @@ class Cart extends Component {
             </div>
         )
     }
+}
+
+const couponMsg = {
+    textAlign: 'center',
+    padding: '10px',
+    background: '#28a745',
+    color: '#fff',
+    marginBottom: '10px',
+    display: 'none'
 }
 
 const mapStateToProps = state => {

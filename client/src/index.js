@@ -13,9 +13,13 @@ import NotFound from './components/NotFound';
 import BookContainer from './components/BookContainer';
 import Book from './components/Book';
 import Cart from './components/Cart';
-
+import AuthGuard from './components/HOCs/AuthGuard'
+import Checkout from './components/Checkout';
+import Profile from './components/Profile';
+import EditProfile from './components/EditProfile';
 
 import * as serviceWorker from './serviceWorker';
+
 
 const routing = (
   <Provider store={store}>
@@ -27,6 +31,9 @@ const routing = (
           <Route exact path="/bookcontainer" component={BookContainer} />
           <Route exact path="/book/:id" component={Book} />
           <Route exact path="/cart" component={Cart} />
+          <Route exact path="/checkout" component={AuthGuard(Checkout)} />
+          <Route exact path="/user_profile" component={AuthGuard(Profile)} />
+          <Route exact path="/edit_profile?" component={AuthGuard(EditProfile)} />
           <Route exact path="/notfound" component={NotFound} />
         </App>
       </Switch>

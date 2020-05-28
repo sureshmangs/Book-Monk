@@ -4,7 +4,7 @@ import * as actions from './actions/authAction';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
-import './index.css';
+import './App.css';
 
 class App extends Component {
 

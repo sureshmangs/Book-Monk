@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import GoogleLogin from 'react-google-login';
 import { CLIENT_ID } from '../config/keys'
 
-import * as actions from '../actions/authAction';
+import * as actions from '../actions/index';
 
 
 class SignUp extends Component {
@@ -13,11 +13,14 @@ class SignUp extends Component {
     }
 
     async responseGoogle(res) {
-        // console.log('responseGoogle is ', res);
-        // console.log('typeof res ', typeof res);
-        // console.log('access token is ', res.accessToken)
-        // localStorage.setItem('accToken', res.accessToken);
+        //console.log('responseGoogle is ', res);
+        //console.log('typeof res ', typeof res);
+        //console.log('access token is ', res.accessToken)
+        //console.log('google id', res.profileObj.googleId)
         await this.props.oauthGoogle(res.accessToken);
+        if (this.props.isAuth) {
+            this.props.fetchUserProfile(res.profileObj.googleId);
+        }
         if (!this.props.errorMessage) {
             this.props.history.push('/');
         }
@@ -43,8 +46,9 @@ class SignUp extends Component {
     }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
     return {
+        isAuth: state.auth.isAuth,
         errorMessage: state.auth.errorMessage,
         accessTokenG: state.auth.accessTokenG
     }
