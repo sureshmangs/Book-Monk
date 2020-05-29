@@ -23,9 +23,12 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
+    "node-mailjet": "^3.3.1",
     "nodemon": "^2.0.4",
     "passport": "^0.4.1",
     "passport-google-token": "^0.1.2",
-    "passport-jwt": "^4.0.0"
+    "passport-jwt": "^4.0.0",
+    "stripe": "^8.56.0",
+    "uuidv4": "^6.1.0"
   }
 }

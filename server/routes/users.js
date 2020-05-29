@@ -21,4 +21,11 @@ router.route('/userprofile')
     .post(UsersController.fetchUserProfile);
 
 
+router.route('/editprofile')
+    .post(UsersController.editUserProfile);
+
+router.route('/payment')
+    .post(UsersController.makePayment);
+
+
 module.exports = router;
