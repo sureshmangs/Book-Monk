@@ -19,13 +19,15 @@ export const fetchUserProfile = (id) => {
     };
 }
 
-
-
-export const editUserProfile = () => {
+export const editUserProfile = (user) => {
     return async dispatch => {
         try {
+            const res = await axios.post('/users/editprofile', {
+                "user": user
+            })
             dispatch({
-                type: EDIT_USER_PROFILE
+                type: EDIT_USER_PROFILE,
+                payload: res.data
             });
 
         } catch (err) {
@@ -33,3 +35,4 @@ export const editUserProfile = () => {
         }
     };
 }
+

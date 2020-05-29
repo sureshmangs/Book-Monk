@@ -14,7 +14,8 @@ export default (state = USER_PROFILE_DEFAULT_STATE, action) => {
             }
         case EDIT_USER_PROFILE:
             return {
-                ...state
+                ...state,
+                userProfile: action.payload[0]
             }
         default:
             return {

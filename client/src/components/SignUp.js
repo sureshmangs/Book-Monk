@@ -35,7 +35,7 @@ class SignUp extends Component {
                 <GoogleLogin
                     clientId={CLIENT_ID}
                     buttonText="Google"
-                    scope="openid profile email https://www.googleapis.com/auth/calendar"
+                    scope="openid profile email"
                     onSuccess={this.responseGoogle}
                     onFailure={this.responseGoogle}
                     isSignedIn={true}

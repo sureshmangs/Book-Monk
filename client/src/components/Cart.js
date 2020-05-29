@@ -1,13 +1,51 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
-import * as actions from '../actions/cartAction';
+import * as actions from '../actions/index';
 import { Link } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
+import StripeCheckout from 'react-stripe-checkout';
+import { STRIPE_PS_KEY } from '../config/keys';
+import axios from 'axios';
+
+
+
+
 class Cart extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            paySuccess: false,
+            payFailure: false
+        }
+    }
+
+    makePayment = token => {
+        const items = this.props.items;
+        const payableAmt = this.props.total;
+        const user = this.props.userProfile;
+        const body = {
+            token,
+            items,
+            payableAmt,
+            user
+        }
+        axios.post('users/payment', body)
+            .then((response) => {
+                this.setState({
+                    paySuccess: true
+                })
+            })
+            .catch((err) => {
+                this.setState({
+                    payFailure: true
+                })
+            })
+    }
+
 
     handleIncrease = (id, quantity) => {
-        console.log('handleIncrease id', id)
-        console.log('handleIncrease quantity', quantity)
         if (quantity !== '99') {
             this.props.incrementQuantity(id);
         } else {
@@ -17,8 +55,6 @@ class Cart extends Component {
     }
 
     handleDecrease = (id, quantity) => {
-        console.log('handleDecrease id', id)
-        console.log('handleDecrease quantity', typeof quantity)
         if (quantity === '1') {
             this.handleRemove(id);
         } else {
@@ -28,7 +64,6 @@ class Cart extends Component {
     }
 
     handleRemove = id => {
-        console.log('cart remove from cart', id)
         this.props.removeFromCart(id);
     }
 
@@ -41,7 +76,13 @@ class Cart extends Component {
         ReactDOM.findDOMNode(this.refs.couponMsg).style.display = 'block';
     }
     render() {
-        const { items, subTotal, total } = this.props;
+        const { items, subTotal, shipping, total } = this.props;
+        if (this.state.paySuccess) {
+            return <Redirect to='/payment_success' />;
+        }
+        if (this.state.payFailure) {
+            return <Redirect to='/payment_failure' />;
+        }
         return (
             <div style={{ background: '#eecda3' }}>
                 <div className="px-4 px-lg-0">
@@ -118,13 +159,23 @@ class Cart extends Component {
                                         <p className="font-italic mb-4">Shipping and additional costs are calculated based on values you have entered.</p>
                                         <ul className="list-unstyled mb-4">
                                             <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Order Subtotal </strong><strong>₹ {subTotal}</strong></li>
-                                            <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Shipping and handling</strong><strong>₹ {99}</strong></li>
+                                            <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Shipping and handling</strong><strong>₹ {total ? shipping : 0}</strong></li>
                                             <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Tax</strong><strong>₹ 0</strong></li>
                                             <li className="d-flex justify-content-between py-3 border-bottom"><strong className="text-muted">Total</strong>
                                                 <h5 className="font-weight-bold">₹ {total}</h5>
                                             </li>
                                         </ul>
-                                        <Link to='/checkout' className="text-decoration-none"><button className="btn btn-danger rounded-pill py-2 btn-block text-decoration-none">Procceed to checkout</button></Link>
+                                        {/* <Link to='/checkout' className="text-decoration-none"><button className="btn btn-danger rounded-pill py-2 btn-block text-decoration-none">Procceed to checkout</button></Link>
+                                         */}
+                                        <StripeCheckout
+                                            stripeKey={STRIPE_PS_KEY}
+                                            token={this.makePayment}
+                                            name="Book Monk"
+                                            currency="INR"
+                                            billingAddress={true}
+                                            amount={total * 100} >
+                                            <button className="btn btn-large btn-danger ">Procceed to checkout</button>
+                                        </StripeCheckout>
                                     </div>
                                 </div>
                             </div>
@@ -149,7 +200,9 @@ const mapStateToProps = state => {
     return {
         items: state.cart.items,
         subTotal: state.cart.subTotal,
-        total: state.cart.total
+        shipping: state.cart.shipping,
+        total: state.cart.total,
+        userProfile: state.profile.userProfile
     }
 }
 

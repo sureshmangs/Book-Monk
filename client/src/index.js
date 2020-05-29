@@ -17,6 +17,8 @@ import AuthGuard from './components/HOCs/AuthGuard'
 import Checkout from './components/Checkout';
 import Profile from './components/Profile';
 import EditProfile from './components/EditProfile';
+import Success from './components/Success';
+import Failure from './components/Failure';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -33,7 +35,9 @@ const routing = (
           <Route exact path="/cart" component={Cart} />
           <Route exact path="/checkout" component={AuthGuard(Checkout)} />
           <Route exact path="/user_profile" component={AuthGuard(Profile)} />
-          <Route exact path="/edit_profile?" component={AuthGuard(EditProfile)} />
+          <Route exact path="/edit_profile/:id" component={AuthGuard(EditProfile)} />
+          <Route exact path="/payment_success" component={AuthGuard(Success)} />
+          <Route exact path="/payment_failure" component={AuthGuard(Failure)} />
           <Route exact path="/notfound" component={NotFound} />
         </App>
       </Switch>
