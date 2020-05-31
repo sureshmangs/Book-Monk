@@ -6,6 +6,8 @@ dotenv.config();
 
 const stripe = require('stripe')(process.env.STRIPE_SC_KEY);
 
+
+
 signToken = user => {
     return JWT.sign({
         iss: 'Suresh',
@@ -15,44 +17,45 @@ signToken = user => {
     }, process.env.JWT_SECRET);
 }
 
-sendOrderdetail = (msgToBeSend, user) => {
-    return new Promise(async (resolve, reject) => {
-        const mailjet = require('node-mailjet')
-            .connect(process.env.MAILJET_PUBLIC_KEY, process.env.MAILJET_SECRET_KEY)
-        const request = await mailjet
-            .post("send", { 'version': 'v3.1' })
-            .request({
-                "Messages": [
-                    {
-                        "From": {
-                            "Email": "sureshmangs3@gmail.com",
-                            "Name": "Book Monk"
-                        },
-                        "To": [
-                            {
-                                "Email": user.email,
-                                "Name": user.name
-                            }
-                        ],
-                        "Subject": "Order Confirmation Book Monk",
-                        "TextPart": "Do not reply",
-                        "HTMLPart": msgToBeSend,
-                        "CustomID": ""
-                    }
-                ]
-            })
-        request
-            .then((result) => {
-                console.log('Email sent to ', user.email)
-                console.log(result.body)
-                resolve(true);
-            })
-            .catch((err) => {
-                console.log(err.statusCode)
-            })
-    })
 
+
+
+sendOrderdetail = (msgToBeSend, user) => {
+    const mailjet = require('node-mailjet')
+        .connect(process.env.MAILJET_PUBLIC_KEY, process.env.MAILJET_SECRET_KEY)
+    const request = mailjet
+        .post("send", { 'version': 'v3.1' })
+        .request({
+            "Messages": [
+                {
+                    "From": {
+                        "Email": "sureshmangs3@gmail.com",
+                        "Name": "Book Monk"
+                    },
+                    "To": [
+                        {
+                            "Email": user.email,
+                            "Name": user.name
+                        }
+                    ],
+                    "Subject": "Order Confirmation Book Monk",
+                    "TextPart": "Do not reply",
+                    "HTMLPart": msgToBeSend,
+                    "CustomID": "Book Monk"
+                }
+            ]
+        })
+    request
+        .then((result) => {
+            console.log('Email sent to ', user.email)
+            //console.log(result.body)
+        })
+        .catch((err) => {
+            console.log(err.statusCode)
+        })
 }
+
+
 
 
 module.exports = {
@@ -63,10 +66,20 @@ module.exports = {
         res.status(200).json({ token });
     },
 
+
+
+
+
+
     checkAuth: async (req, res, next) => {
         console.log('We managed to get here!');
         res.json({ success: true });
     },
+
+
+
+
+
 
     newsletter: async (req, res, next) => {
         const email = req.body.email;
@@ -97,6 +110,10 @@ module.exports = {
         })
     },
 
+
+
+
+
     fetchUserProfile: async (req, res, next) => {
         const id = req.body.id;
         try {
@@ -113,6 +130,10 @@ module.exports = {
             console.log('error occured ', err)
         }
     },
+
+
+
+
 
     editUserProfile: async (req, res, next) => {
         const user = req.body.user;
@@ -136,6 +157,10 @@ module.exports = {
             console.log('error occured', err);
         }
     },
+
+
+
+
 
     makePayment: async (req, res, next) => {
         const { user, payableAmt, items, token } = req.body;
@@ -212,6 +237,7 @@ module.exports = {
         let msgToBeSend = msgPart1 + orderDetail + msgPart2;
 
 
+
         try {
             return stripe.customers.create({
                 email: token.email,
@@ -256,7 +282,7 @@ module.exports = {
 
                 // send order details to the user
                 await sendOrderdetail(msgToBeSend, user);
-
+                console.log('payment is successfull')
 
                 res.status(200).json({
                     "success": true
@@ -266,7 +292,24 @@ module.exports = {
         } catch (err) {
             console.log('error is ', err)
         }
-    }
+    },
+
+    getUserOrders: async (req, res, next) => {
+        const id = req.body.id;
+        try {
+            let sql = `SELECT * from orders where user_id="${id}"`;
+            connection.query(sql, (err, result) => {
+                if (err) {
+                    console.log('error occured ', err)
+                }
+                else {
+                    res.status(200).json(result)
+                }
+            })
+        } catch (err) {
+            console.log('error occured ', err)
+        }
+    },
 
 }
 

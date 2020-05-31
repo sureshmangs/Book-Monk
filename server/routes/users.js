@@ -28,4 +28,8 @@ router.route('/payment')
     .post(UsersController.makePayment);
 
 
+router.route('/get_user_orders')
+    .post(UsersController.getUserOrders);
+
+
 module.exports = router;
