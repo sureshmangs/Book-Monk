@@ -20,7 +20,7 @@ class Book extends Component {
         let content = loadBookSpin ? <Spinner /> : < div className="container p-5 " >
             <div className="row">
                 <div className="col-lg-4 col-md-4 col-sm-6 col-12 ">
-                    <img className=" w-100 img-fluid card card-body" src={require(`../images/${book.image}`)} alt="Book Cover" />
+                    {book.image ? <img className=" w-100 img-fluid card card-body" src={require(`../images/books_DB/${book.image}`)} alt="Book Cover" /> : <img className=" w-100 mb-2 img-fluid card card-body" src={require(`../images/books_DB/no_cover.jpg`)} alt="Book Cover" />}
                 </div>
                 <div className="col-lg-8 col-md-8 col-sm-6 col-12">
                     <h2 className="mb-4">{book.name}</h2>
@@ -32,7 +32,7 @@ class Book extends Component {
                             <strong>Synopsis:</strong> {book.description}
                         </li>
                         <li className="list-group-item">
-                            <strong>Released:</strong> {book.year}
+                            <strong>Released:</strong> {book.edition}
                         </li>
                         <li className="list-group-item">
                             <strong>ISBN:</strong> {book.ISBN}

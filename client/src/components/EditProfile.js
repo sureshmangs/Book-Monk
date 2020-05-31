@@ -115,7 +115,7 @@ class EditProfile extends Component {
                                             <label>User Id</label>
                                         </div>
                                         <div className="col-md-6">
-                                            <p>{userProfile.id}</p>
+                                            <p>{userProfile.id.substr(0, 10)}xxxxxxx</p>
                                         </div>
                                     </div>
                                     <div className="row mt-3">

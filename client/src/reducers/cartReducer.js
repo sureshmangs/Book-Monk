@@ -1,4 +1,4 @@
-import { ADD_TO_CART, INCREMENT_QUANTITY, DECREMENT_QUANTITY, REMOVE_FROM_CART } from '../actions/types';
+import { ADD_TO_CART, INCREMENT_QUANTITY, DECREMENT_QUANTITY, REMOVE_FROM_CART, EMPTY_CART } from '../actions/types';
 
 const CART_STATE = {
     items: [],
@@ -88,6 +88,14 @@ export default (state = CART_STATE, action) => {
                 total: state.total - (bookTORemove.book.price * bookTORemove.quantity) - (removeShppingCharge > 0 ? 0 : state.shipping)
             }
 
+
+        case EMPTY_CART:
+            return {
+                ...state,
+                items: [],
+                subTotal: 0,
+                total: 0,
+            }
 
 
         default:

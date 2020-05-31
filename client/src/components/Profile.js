@@ -5,8 +5,11 @@ import * as actions from '../actions/userProfileAction';
 
 
 class Profile extends Component {
+    componentDidMount() {
+        this.props.getUserOrders(this.props.userProfile.id);
+    }
     render() {
-        const { userProfile } = this.props;
+        const { userProfile, orders } = this.props;
         return (
             <div className="container emp-profile">
                 <div className="row">
@@ -44,7 +47,7 @@ class Profile extends Component {
                                         <label>User Id</label>
                                     </div>
                                     <div className="col-md-6">
-                                        <p>{userProfile.id}</p>
+                                        <p>{userProfile.id.substr(0, 10)}xxxxxxx</p>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -82,11 +85,75 @@ class Profile extends Component {
                             </div>
                             <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <div className="row">
-                                    <div className="col-md-6">
-                                        <label>Date</label>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <p>Order ID</p>
+
+                                    <div className="table-responsive">
+                                        <table className="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" className="border-0 bg-light">
+                                                        <div className="p-2 px-3 text-uppercase text-center">OrderID</div>
+                                                    </th>
+                                                    <th scope="col" className="border-0 bg-light">
+                                                        <div className="p-2 px-3 text-uppercase text-center">Date</div>
+                                                    </th>
+                                                    <th scope="col" className="border-0 bg-light">
+                                                        <div className="py-2 text-uppercase text-center">Time</div>
+                                                    </th>
+                                                    <th scope="col" className="border-0 bg-light">
+                                                        <div className="py-2 text-uppercase text-center">Item</div>
+                                                    </th>
+                                                    <th scope="col" className="border-0 bg-light">
+                                                        <div className="py-2 text-uppercase text-center">Amount</div>
+                                                    </th>
+                                                    <th scope="col" className="border-0 bg-light">
+                                                        <div className="py-2 text-uppercase text-center" >Delivery</div>
+                                                    </th>
+                                                    <th scope="col" className="border-0 bg-light">
+                                                        <div className="py-2 text-uppercase text-center">Phone</div>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {orders.map((order, index) => {
+                                                    const items = JSON.parse(order.items);
+                                                    return (
+                                                        <tr key={index}>
+                                                            <td className="border-0 align-middle text-center">{order.order_id}</td>
+                                                            <td className="border-0 align-middle text-center" style={{ whiteSpace: 'nowrap' }}>{order.date.substr(0, 10)}</td>
+                                                            <td className="border-0 align-middle text-center">{order.time.substr(0, 5)}</td>
+                                                            <td className="border-0 align-middle text-center">
+
+                                                                <table className="table ">
+                                                                    <tbody>
+                                                                        <tr key={index}>
+                                                                            <td>Name</td>
+                                                                            <td>price</td>
+                                                                            <td>Qty</td>
+                                                                        </tr>
+                                                                        {
+                                                                            items.map((item, index) => {
+                                                                                return (
+
+                                                                                    <tr key={index}>
+                                                                                        <td style={{ whiteSpace: 'nowrap' }}>{item.item}</td>
+                                                                                        <td>{item.price}</td>
+                                                                                        <td>{item.quantity}</td>
+                                                                                    </tr>
+
+                                                                                )
+                                                                            })
+                                                                        }
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                            <td className="border-0 align-middle text-center">₹ {order.amount}</td>
+                                                            <td className="border-0 align-middle text-center" style={{ whiteSpace: 'nowrap' }}>{order.delivery}</td>
+                                                            <td className="border-0 align-middle text-center">{order.phone}</td>
+                                                        </tr>
+                                                    )
+                                                })}
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -100,7 +167,8 @@ class Profile extends Component {
 
 const mapStateToProps = state => {
     return {
-        userProfile: state.profile.userProfile
+        userProfile: state.profile.userProfile,
+        orders: state.profile.orders
     }
 }
 

@@ -1,4 +1,4 @@
-import { FETCH_USER_PROFILE, EDIT_USER_PROFILE } from '../actions/types';
+import { FETCH_USER_PROFILE, EDIT_USER_PROFILE, SET_USER_ORDERS } from '../actions/types';
 
 const USER_PROFILE_DEFAULT_STATE = {
     userProfile: {},
@@ -16,6 +16,11 @@ export default (state = USER_PROFILE_DEFAULT_STATE, action) => {
             return {
                 ...state,
                 userProfile: action.payload[0]
+            }
+        case SET_USER_ORDERS:
+            return {
+                ...state,
+                orders: action.payload
             }
         default:
             return {

@@ -33,6 +33,7 @@ class Cart extends Component {
         }
         axios.post('users/payment', body)
             .then((response) => {
+                this.props.emptyCart();
                 this.setState({
                     paySuccess: true
                 })
@@ -116,9 +117,10 @@ class Cart extends Component {
                                                         <tr key={index}>
                                                             <th scope="row" className="border-0">
                                                                 <div className="p-2">
-                                                                    <img src={require(`../images/${item.book.image}`)} alt="book_image" width="70" className="img-fluid rounded shadow-sm" />
+                                                                    {item.book.image ? <img src={require(`../images/books_DB/${item.book.image}`)} alt="book_image" width="70" className="img-fluid rounded shadow-sm" /> : <img src={require(`../images/books_DB/no_cover.jpg`)} alt="book_image" width="70" className="img-fluid rounded shadow-sm" />}
+
                                                                     <div className="ml-3 d-inline-block align-middle">
-                                                                        <h5 className="mb-0"> <Link to={'book/' + item.book.id} className="text-dark d-inline-block align-middle">{item.book.name}</Link></h5><span className="text-muted font-weight-normal font-italic d-block">{item.book.author}</span>
+                                                                        <h5 className="mb-0"> <Link to={'book/' + item.book.id} className="text-dark d-inline-block align-middle text-truncate">{item.book.name}</Link></h5><span className="text-muted font-weight-normal font-italic d-block">{item.book.author}</span>
                                                                     </div>
                                                                 </div>
                                                             </th>

@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_FROM_CART, INCREMENT_QUANTITY, DECREMENT_QUANTITY } from './types';
+import { ADD_TO_CART, REMOVE_FROM_CART, INCREMENT_QUANTITY, DECREMENT_QUANTITY, EMPTY_CART } from './types';
 
 
 export const addToCart = (book) => {
@@ -39,6 +39,16 @@ export const removeFromCart = (id) => {
         dispatch({
             type: REMOVE_FROM_CART,
             payload: id
+        })
+
+    }
+}
+
+
+export const emptyCart = () => {
+    return async dispatch => {
+        dispatch({
+            type: EMPTY_CART
         })
 
     }
