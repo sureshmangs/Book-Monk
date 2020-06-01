@@ -32,5 +32,39 @@ module.exports = {
         } catch (err) {
             console.log(err);
         }
+    },
+
+    searchBooks: async (req, res, next) => {
+        const searchData = req.query.searchData;
+        try {
+            let sql = `SELECT * FROM books where name LIKE "%${searchData}%" OR author LIKE "%${searchData}%" OR ISBN="${searchData}" OR cat="${searchData}" `;
+            connection.query(sql, (err, result) => {
+                if (err) {
+                    console.log(err)
+                }
+                else {
+                    res.status(200).json(result)
+                }
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    },
+
+    getBookCategories: async (req, res, next) => {
+        try {
+            let sql = `SELECT DISTINCT cat FROM books`;
+            connection.query(sql, (err, result) => {
+                if (err) {
+                    console.log(err)
+                }
+                else {
+                    console.log(result)
+                    res.status(200).json(result)
+                }
+            });
+        } catch (err) {
+            console.log(err);
+        }
     }
 }

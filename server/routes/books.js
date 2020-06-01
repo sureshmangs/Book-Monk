@@ -10,6 +10,12 @@ router.route('/getBooks')
 router.route('/getBookInfo')
     .get(booksController.getBookInfo);
 
+router.route('/searchbooks')
+    .get(booksController.searchBooks);
+
+router.route('/getcategories')
+    .get(booksController.getBookCategories);
+
 
 
 module.exports = router;
