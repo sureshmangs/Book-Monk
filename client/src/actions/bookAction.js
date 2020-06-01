@@ -1,4 +1,4 @@
-import { FETCH_BOOKS, MESSAGE, FETCH_BOOK_INFO } from './types';
+import { FETCH_BOOKS, FETCH_BOOK_INFO, FETCH_CATEGORIES } from './types';
 import axios from 'axios';
 
 
@@ -16,10 +16,7 @@ export const fetchBooks = () => {
                 .catch(err => console.log(err))
 
         } catch (err) {
-            //console.log('Some error occured')
-            dispatch({
-                type: MESSAGE
-            })
+            console.log('Some error occured', err)
         }
     }
 }
@@ -42,10 +39,28 @@ export const fetchBookInfo = (id) => {
                 .catch(err => console.log(err))
 
         } catch (err) {
-            //console.log('Some error occured')
-            dispatch({
-                type: MESSAGE
-            })
+            console.log('Some error occured', err)
+        }
+    }
+}
+
+
+
+export const fetchCategories = () => {
+
+    return async dispatch => {
+        try {
+            axios.get('/books/getcategories')
+                .then((response) => {
+                    dispatch({
+                        type: FETCH_CATEGORIES,
+                        payload: response.data
+                    })
+                })
+                .catch(err => console.log(err))
+
+        } catch (err) {
+            console.log('Some error occured', err)
         }
     }
 }

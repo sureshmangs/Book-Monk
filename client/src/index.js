@@ -13,12 +13,13 @@ import NotFound from './components/NotFound';
 import BookContainer from './components/BookContainer';
 import Book from './components/Book';
 import Cart from './components/Cart';
-import AuthGuard from './components/HOCs/AuthGuard'
-import Checkout from './components/Checkout';
+import AuthGuard from './components/HOCs/AuthGuard';
 import Profile from './components/Profile';
 import EditProfile from './components/EditProfile';
 import Success from './components/Success';
 import Failure from './components/Failure';
+import SearchBooks from './components/SearchBooks';
+import SearchBooksInfo from './components/SearchBooksInfo';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -32,8 +33,9 @@ const routing = (
           <Route exact path="/signup" component={SignUp} />
           <Route exact path="/bookcontainer" component={BookContainer} />
           <Route exact path="/book/:id" component={Book} />
+          <Route exact path="/searchbooks/:searchData" component={SearchBooks} />
+          <Route exact path="/searchbooks/book/:id" component={SearchBooksInfo} />
           <Route exact path="/cart" component={Cart} />
-          <Route exact path="/checkout" component={AuthGuard(Checkout)} />
           <Route exact path="/user_profile" component={AuthGuard(Profile)} />
           <Route exact path="/edit_profile/:id" component={AuthGuard(EditProfile)} />
           <Route exact path="/payment_success" component={AuthGuard(Success)} />

@@ -50,7 +50,7 @@ class Footer extends Component {
                                 <div className="single-footer">
                                     <h4 style={footerTitle}>Information</h4>
                                     <ul className="navbar-nav">
-                                        <li ><Link style={footerLink} to="/aboutus" >About Us</Link></li>
+                                        <li ><Link style={footerLink} to="/notfound" >About Us</Link></li>
                                         <li ><Link style={footerLink} to="/notfound" >Delivery Information</Link></li>
                                         <li ><Link style={footerLink} to="/notfound" >Privacy & Policy</Link></li>
                                         <li ><Link style={footerLink} to="/notfound" >Terms & Conditions</Link></li>
@@ -62,11 +62,11 @@ class Footer extends Component {
                                 <div className="single-footer">
                                     <h4 style={footerTitle}>My Account</h4>
                                     <ul className="navbar-nav">
-                                        <li ><Link style={footerLink} to="/notfound" >My Account</Link></li>
-                                        <li ><Link style={footerLink} to="/notfound" >Login</Link></li>
-                                        <li ><Link style={footerLink} to="/notfound" >My Cart</Link></li>
+                                        <li ><Link style={footerLink} to="/user_profile" >My Account</Link></li>
+                                        <li ><Link style={footerLink} to="/signup" >Login</Link></li>
+                                        <li ><Link style={footerLink} to="/cart" >My Cart</Link></li>
                                         <li ><Link style={footerLink} to="/notfound" >Wishlist</Link></li>
-                                        <li ><Link style={footerLink} to="/notfound" >Checkout</Link></li>
+                                        <li ><Link style={footerLink} to="/cart" >Checkout</Link></li>
                                     </ul>
                                 </div>
                             </div>
@@ -131,7 +131,8 @@ class Footer extends Component {
 }
 
 const footerTitle = {
-    color: "rgb(52, 58, 64)"
+    color: "orange"
+
 }
 
 const footerLink = {

@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/index';
 import Spinner from './Spinner';
 
-class Book extends Component {
+class SearchBooksInfo extends Component {
 
     componentDidMount() {
-        this.props.fetchBookInfo(this.props.match.params.id);
+        this.props.searchBooksInfo(this.props.match.params.id);
     }
 
     handleAddToCart = () => {
@@ -67,9 +67,9 @@ const addedToCart = {
 
 const mapStateToProps = state => {
     return {
-        book: state.book.bookInfo,
-        loadBookSpin: state.book.loadBookSpin
+        book: state.searchBook.bookInfo,
+        loadBookSpin: state.searchBook.loadBookSpin
     }
 }
 
-export default connect(mapStateToProps, actions)(Book)
+export default connect(mapStateToProps, actions)(SearchBooksInfo)

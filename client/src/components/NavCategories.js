@@ -13,6 +13,9 @@ class NavCategories extends Component {
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="q#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Books</a>
                                 <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <ul>
+                                        <li className="dropdown-item">More Books To Come</li>
+                                    </ul>
                                 </div>
                             </li>
                             <li className="nav-item ">

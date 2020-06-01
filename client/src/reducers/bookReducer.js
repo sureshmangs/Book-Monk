@@ -1,11 +1,11 @@
-import { FETCH_BOOKS, FETCH_BOOK_INFO, MESSAGE } from '../actions/types';
+import { FETCH_BOOKS, FETCH_BOOK_INFO, FETCH_CATEGORIES } from '../actions/types';
 
 
 const DEFAULT_STATE = {
     books: [],
     bookInfo: {},
     loadBookSpin: true,
-    msg: ''
+    categories: []
 }
 
 export default (state = DEFAULT_STATE, action) => {
@@ -21,10 +21,10 @@ export default (state = DEFAULT_STATE, action) => {
                 bookInfo: action.payload[0],
                 loadBookSpin: false
             }
-        case MESSAGE:
+        case FETCH_CATEGORIES:
             return {
                 ...state,
-                msg: action.payload
+                categories: action.payload
             }
         default:
             return {

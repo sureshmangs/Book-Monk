@@ -1,36 +1,34 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../actions/bookAction';
 
 class BookCategories extends Component {
 
-    handleCategory = () => {
-        console.log('in handle categorys')
+    componentDidMount() {
+        this.props.fetchCategories();
     }
     render() {
+        const { categories } = this.props;
         return (
             <div className="text-center">
-                <ul className="list-group">
-                    <li className="list-group-item bg-primary">Browse By Category</li>
-                    <li className="list-group-item" style={pointer} onClick={this.handleCategory}>Art and Music</li>
-                    <li className="list-group-item" style={pointer} onClick={this.handleCategory}>Business</li>
-                    <li className="list-group-item" style={pointer} onClick={this.handleCategory}>Biography</li>
-                    <li className="list-group-item" style={pointer} onClick={this.handleCategory}>Art and Music</li>
-                    <li className="list-group-item" style={pointer} onClick={this.handleCategory}>Business</li>
-                    <li className="list-group-item" style={pointer} onClick={this.handleCategory}>Biography</li>
-                    <li className="list-group-item" style={pointer} onClick={this.handleCategory}>Art and Music</li>
-                    <li className="list-group-item" style={pointer} onClick={this.handleCategory}>Business</li>
-                    <li className="list-group-item" style={pointer} onClick={this.handleCategory}>Biography</li>
-                    <li className="list-group-item" style={pointer} onClick={this.handleCategory}>Art and Music</li>
-                    <li className="list-group-item" style={pointer} onClick={this.handleCategory}>Business</li>
-                    <li className="list-group-item" style={pointer} onClick={this.handleCategory}>Biography</li>
-
+                <ul className="list-group navbar-nav">
+                    <li className="list-group-item bg-primary" key={-1}>Browse By Category</li>
+                    {
+                        categories.map((category, index) => {
+                            return <Link to={`/searchbooks/` + category.cat} key={index} ><li key={index} className="list-group-item " >{category.cat}</li></Link>
+                        })
+                    }
                 </ul>
             </div>
         )
     }
 }
 
-const pointer = {
-    cursor: 'pointer'
+const mapStateToProps = state => {
+    return {
+        categories: state.book.categories
+    }
 }
 
-export default BookCategories
+export default connect(mapStateToProps, actions)(BookCategories)

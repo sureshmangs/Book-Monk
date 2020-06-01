@@ -11,7 +11,7 @@ class HomePage extends Component {
                         <BookCategories />
                     </div>
                     <div className="col-sm-10 col-md-9 col-12">
-                        <h3 className="mb-4">Trending Now in Books</h3>
+                        <h3 className="mb-4 font-italic">Trending Now in Books</h3>
                         <BookContainer />
                     </div>
                 </div>
